@@ -3,23 +3,20 @@ import edu.princeton.cs.algs4.DepthFirstOrder;
 import edu.princeton.cs.algs4.Digraph;
 
 public class SAP {
-  private Digraph G;
-  private Iterable<Integer> reversePost;
+  private final Digraph G;
 
   // constructor takes a digraph (not necessarily a DAG)
   public SAP(Digraph G) {
     if (G == null) {
       throw new IllegalArgumentException("Null argument");
     }
-    this.G = G;
-    DepthFirstOrder dfs = new DepthFirstOrder(G);
-    reversePost = dfs.reversePost();
+    this.G = new Digraph(G);
   }
 
   private int ancestorOrLength(BreadthFirstDirectedPaths bfsV, BreadthFirstDirectedPaths bfsW, String type) {
     int shortestAncestor = -1;
     int shortestPath = -1;
-    for (int i : reversePost) {
+    for (int i = 0; i < G.V(); i++) {
       if (bfsV.hasPathTo(i) && bfsW.hasPathTo(i)) {
         if (shortestAncestor == -1) {
           shortestAncestor = i;
@@ -70,6 +67,16 @@ public class SAP {
     if (v == null || w == null) {
       throw new IllegalArgumentException("Null argument");
     }
+    for (Integer i : v) {
+      if (i == null) {
+        throw new IllegalArgumentException("Null Integer object");
+      }
+    }
+    for (Integer i : w) {
+      if (i == null) {
+        throw new IllegalArgumentException("Null Integer object");
+      }
+    }
 
     BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
     BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);
@@ -81,6 +88,16 @@ public class SAP {
   public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
     if (v == null || w == null) {
       throw new IllegalArgumentException("Null argument");
+    }
+    for (Integer i : v) {
+      if (i == null) {
+        throw new IllegalArgumentException("Null Integer object");
+      }
+    }
+    for (Integer i : w) {
+      if (i == null) {
+        throw new IllegalArgumentException("Null Integer object");
+      }
     }
 
     BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
